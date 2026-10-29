@@ -1,0 +1,42 @@
+{
+  "$schema": "../../schema/private.schema.json",
+  "slug": "contoh-nadia",
+  "contact": {
+    "email": "nadia@contoh.id",
+    "phone": "+62 812 0000 0000",
+    "showPhoneOnPdf": true,
+    "cityLine": "Jakarta Selatan"
+  },
+  "order": {
+    "orderId": "GF-2026-0001",
+    "tier": "web-card",
+    "addons": [
+      "translation"
+    ],
+    "coupon": "FOUNDING-WEB",
+    "paidAt": "2026-11-10T09:15:00+07:00",
+    "briefCompletedAt": "2026-11-10T20:40:00+07:00",
+    "dueDate": "2026-11-16",
+    "status": "drafting",
+    "revisions": {
+      "included": 3,
+      "used": 0
+    },
+    "minutesSpent": 45
+  },
+  "github": {
+    "username": "contoh-nadia",
+    "repo": "contoh-nadia.github.io"
+  },
+  "consent": {
+    "termsAccepted": true,
+    "termsAcceptedAt": "2026-11-10T09:14:00+07:00",
+    "showcase": true,
+    "showcaseAt": "2026-11-10T09:14:00+07:00",
+    "ageGroup": "18+"
+  },
+  "retention": {
+    "deleteAfter": "2027-02-14",
+    "cvCareActive": false
+  }
+}

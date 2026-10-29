@@ -4,16 +4,28 @@
   "private": true,
   "description": "Template web CV Glowfolio: satu file data, dibangun dan dipasang otomatis ke GitHub Pages.",
   "type": "module",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "check": "node src/check.mjs",
     "build": "node src/build.mjs",
     "preview": "node src/preview.mjs",
-    "test": "node --test tests/*.test.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "pdf": "node src/pdf.mjs",
+    "test:pdf": "node src/pdf.mjs --private tests/fixtures/nadia.private.json --lang all --out out/test && python3 tools/ats_check.py out/test"
   },
   "dependencies": {
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
     "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "playwright": "1.56.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/newsreader": "^5.3.0",
+    "@fontsource/plus-jakarta-sans": "^5.3.0",
+    "@fontsource/sora": "^5.3.0",
+    "@fontsource/source-sans-3": "^5.3.1"
   }
 }

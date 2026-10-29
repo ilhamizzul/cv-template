@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      - run: npm ci --omit=dev  # Playwright & font PDF tidak dibutuhkan untuk web
       - run: npm test
       - name: Periksa data (skema + privasi)
         run: npm run check

@@ -1,0 +1,250 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glowfolio.github.io/schema/cv/1.0/private.schema.json",
+  "title": "Glowfolio CV (data privat)",
+  "description": "Data yang TIDAK PERNAH masuk repo publik: kontak untuk PDF, data pesanan, dan persetujuan. Disimpan hanya di penyimpanan Glowfolio dan dihapus paling lambat 90 hari setelah pesanan selesai (kecuali pelanggan CV Care).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "slug",
+    "contact",
+    "order",
+    "consent",
+    "retention"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{0,63}$",
+      "description": "Harus sama dengan meta.slug di file data publik."
+    },
+    "contact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "email"
+      ],
+      "description": "Hanya dicetak di PDF. Tidak pernah dirender ke web.",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "phone": {
+          "type": "string",
+          "pattern": "^\\+?[0-9 -]{8,20}$"
+        },
+        "showPhoneOnPdf": {
+          "type": "boolean",
+          "default": true
+        },
+        "cityLine": {
+          "type": "string",
+          "description": "Baris lokasi di PDF, mis. \"Jakarta Selatan\". Jangan alamat lengkap kecuali klien memintanya."
+        }
+      }
+    },
+    "order": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "orderId",
+        "tier",
+        "status"
+      ],
+      "properties": {
+        "orderId": {
+          "type": "string"
+        },
+        "mayarTransactionId": {
+          "type": "string"
+        },
+        "tier": {
+          "enum": [
+            "rapi-ats",
+            "signature",
+            "web-card",
+            "portfolio-pro",
+            "brand-kit"
+          ]
+        },
+        "addons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "coupon": {
+          "type": "string"
+        },
+        "paidAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "briefCompletedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dueDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "status": {
+          "enum": [
+            "paid",
+            "brief",
+            "story-mining",
+            "drafting",
+            "review",
+            "revision",
+            "delivered",
+            "closed",
+            "refunded"
+          ]
+        },
+        "revisions": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "included": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "used": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "windowEndsAt": {
+              "type": "string",
+              "format": "date",
+              "description": "14 hari sejak draf pertama."
+            }
+          }
+        },
+        "minutesSpent": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Untuk kalibrasi estimasi kerja per tier."
+        }
+      }
+    },
+    "github": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "username": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$"
+        },
+        "repo": {
+          "type": "string"
+        },
+        "collaboratorInvitedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "consent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "termsAccepted",
+        "ageGroup"
+      ],
+      "properties": {
+        "termsAccepted": {
+          "const": true
+        },
+        "termsAcceptedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "showcase": {
+          "type": "boolean",
+          "default": false,
+          "description": "Boleh dipajang sebagai contoh dengan data disamarkan."
+        },
+        "showcaseAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "testimonial": {
+          "type": "string"
+        },
+        "ageGroup": {
+          "enum": [
+            "18+",
+            "under-18"
+          ],
+          "description": "Klien di bawah 18 tahun wajib disertai persetujuan orang tua/wali yang diverifikasi (UU PDP Pasal 25)."
+        },
+        "guardianConsent": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 2
+            },
+            "relation": {
+              "type": "string"
+            },
+            "verifiedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Diisi setelah persetujuan orang tua/wali diverifikasi. Pengerjaan belum boleh dimulai sebelum terisi."
+            },
+            "method": {
+              "type": "string",
+              "description": "Cara verifikasi, mis. ikut dalam percakapan WhatsApp."
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "ageGroup": {
+                "const": "under-18"
+              }
+            },
+            "required": [
+              "ageGroup"
+            ]
+          },
+          "then": {
+            "required": [
+              "guardianConsent"
+            ]
+          }
+        }
+      ]
+    },
+    "retention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "deleteAfter"
+      ],
+      "properties": {
+        "deleteAfter": {
+          "type": "string",
+          "format": "date",
+          "description": "Tanggal selesai + 90 hari, atau akhir langganan CV Care + 90 hari."
+        },
+        "cvCareActive": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  }
+}

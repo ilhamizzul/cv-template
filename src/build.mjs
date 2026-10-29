@@ -33,6 +33,21 @@ function figureFor(symbol) {
   return { svg: readFileSync(join(ROOT, 'figures', 'default.svg'), 'utf8'), found: false };
 }
 
+// Judul PDF dari metadata (/Title). PDF buatan npm run pdf berjudul "<nama> - CV".
+export function pdfTitle(buf) {
+  const raw = buf.toString('latin1');
+  const m = raw.match(/\/Title\s*(\((?:\\.|[^\\)])*\)|<[0-9A-Fa-f\s]*>)/);
+  if (!m) return null;
+  let bytes;
+  if (m[1].startsWith('<')) bytes = Buffer.from(m[1].slice(1, -1).replace(/\s/g, ''), 'hex');
+  else {
+    const body = m[1].slice(1, -1).replace(/\\([0-7]{1,3}|.)/g, (_, e) => (/^[0-7]+$/.test(e) ? String.fromCharCode(parseInt(e, 8)) : ({ n: '\n', r: '\r', t: '\t' }[e] ?? e)));
+    bytes = Buffer.from(body, 'latin1');
+  }
+  if (bytes[0] === 0xfe && bytes[1] === 0xff) return bytes.subarray(2).swap16().toString('utf16le');
+  return bytes.toString('latin1');
+}
+
 function favicon(data) {
   const p = data.brand.palette;
   const mono = esc(data.brand.monogram || initials(data.profile.fullName));
@@ -40,7 +55,7 @@ function favicon(data) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="${p.primary}"/><text x="32" y="${32 + size * 0.36}" font-family="system-ui,sans-serif" font-weight="700" font-size="${size}" text-anchor="middle" fill="${p.ground ?? '#fff'}">${mono}</text></svg>`;
 }
 
-export async function build({ dataPath = process.env.CV_DATA || join(ROOT, 'data', 'cv.json'), outDir = DIST, env = process.env, log = console.log } = {}) {
+export async function build({ dataPath = process.env.CV_DATA || join(ROOT, 'data', 'cv.json'), outDir = DIST, publicDir = join(ROOT, 'public'), env = process.env, log = console.log } = {}) {
   const data = JSON.parse(readFileSync(dataPath, 'utf8'));
   const { errors, warnings } = checkCv(data);
   warnings.forEach((w) => log(`  ! ${w}`));
@@ -64,8 +79,12 @@ export async function build({ dataPath = process.env.CV_DATA || join(ROOT, 'data
     color: { dark: data.brand.palette.ink ?? '#0F172A', light: '#0000' },
   });
 
-  const publicDir = join(ROOT, 'public');
   const hasPdf = existsSync(join(publicDir, 'cv.pdf'));
+  if (hasPdf) {
+    const title = pdfTitle(readFileSync(join(publicDir, 'cv.pdf')));
+    if (title === null) log('  ! public/cv.pdf tidak punya judul; pastikan ini PDF milik klien dan tanpa kontak');
+    else if (!title.includes(data.profile.fullName)) throw new Error(`public/cv.pdf berjudul "${title}", bukan milik ${data.profile.fullName}. Buat ulang dengan: npm run pdf -- --public`);
+  }
   const photo = data.profile.photo ? data.profile.photo.replace(/^\.?\/?(public\/)?/, '') : '';
   if (photo && !existsSync(join(publicDir, photo))) throw new Error(`profile.photo "${data.profile.photo}" tidak ditemukan di folder public/`);
 

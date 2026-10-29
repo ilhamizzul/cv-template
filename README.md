@@ -8,11 +8,14 @@ Contoh isi bawaan adalah **Nadia Putri Lestari**, klien fiktif.
 
 ```
 data/cv.json        ← satu-satunya file yang diganti per klien
-public/             ← file pendukung: foto, cv.pdf (opsional)
+public/             ← file pendukung: foto, cv.pdf tanpa kontak (opsional)
+private/            ← kontak klien untuk PDF; diabaikan git, tidak pernah di-push
 figures/            ← ilustrasi iso-glow, dipilih lewat brand.illustration.symbol
 schema/             ← skema data (sama dengan glowfolio-data)
 src/                ← generator, tampilan, dan skrip
 tests/              ← tes generator (memakai tests/fixtures, bukan data klien)
+tools/ats_check.py  ← uji keterbacaan PDF ATS dengan 3 pengurai
+docs/               ← standar lulus ATS
 .github/workflows/  ← periksa → bangun → pasang ke GitHub Pages
 ```
 
@@ -56,6 +59,40 @@ Data kontak lengkap hanya ada di PDF yang dikirim langsung ke klien. Kalau mau m
 ## Foto
 
 Simpan di `public/`, misalnya `public/foto.jpg`, lalu isi `profile.photo: "foto.jpg"`. Ukuran persegi minimal 192×192 px.
+
+## PDF (ATS & visual)
+
+PDF dibuat di komputer Glowfolio, **bukan** di GitHub Actions. PDF lengkap memuat email dan nomor HP dari file privat, dan file itu tidak boleh masuk repo. Polanya `private/` dan `*.private.json` sudah ada di `.gitignore`.
+
+```bash
+npm install
+npx playwright install chromium        # sekali saja
+npm run pdf -- --private ../glowfolio-data/klien/nadia.private.json
+```
+
+Hasilnya disimpan di `out/`:
+
+- `<slug>-id-ats.pdf`: satu kolom, teks murni, tanpa grafis. Untuk diunggah ke portal lowongan. Semua paket mendapatkannya.
+- `<slug>-id-visual.pdf`: ber-brand, dengan warna, monogram, figur iso-glow, dan QR ke web CV. Untuk paket Signature ke atas.
+
+| Opsi | Fungsi |
+|---|---|
+| `--lang en` / `--lang all` | Bahasa lain (add-on Terjemahan) |
+| `--variant <id>` | Varian per lowongan dari `variants[]` (add-on Varian) |
+| `--only ats` / `--only visual` | Hanya satu jenis |
+| `--public` | Versi visual **tanpa kontak** ke `public/cv.pdf`, untuk tombol "Unduh CV" di web |
+| `--site-url <url>` | Paksa alamat untuk QR (default dihitung dari `github` di file privat) |
+
+Tata letak PDF visual diatur di `outputs.visual.layout`: `sidebar-left`, `sidebar-right`, `header-band`, atau `single-column`. Kalau isinya melebihi `outputs.*.pages`, ukuran huruf diperkecil bertahap sampai 84%. Kalau masih belum muat, akan muncul peringatan agar bullet diringkas.
+
+Build web akan **gagal** kalau `public/cv.pdf` berjudul nama orang lain, misalnya PDF contoh Nadia yang lupa diganti.
+
+Standar lulus PDF ATS dan cara mengujinya ada di [docs/standar-lulus-ats.md](docs/standar-lulus-ats.md):
+
+```bash
+pip install pdfminer.six pypdf
+npm run test:pdf
+```
 
 ## Menjalankan di komputer
 

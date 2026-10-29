@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, writeFileSync, mkdtempSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdtempSync, existsSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { build, resolveSiteUrl } from '../src/build.mjs';
@@ -15,7 +15,7 @@ async function buildWith(mutate, env = {}) {
   const dataPath = join(dir, 'cv.json');
   writeFileSync(dataPath, JSON.stringify(d));
   const outDir = join(dir, 'dist');
-  const res = await build({ dataPath, outDir, env, log: quiet });
+  const res = await build({ dataPath, outDir, publicDir: join(dir, 'public'), env, log: quiet });
   return { ...res, read: (p) => readFileSync(join(outDir, p), 'utf8'), has: (p) => existsSync(join(outDir, p)) };
 }
 
@@ -69,4 +69,12 @@ test('QR dan teks dari data di-escape', async () => {
 
 test('build gagal bila ada data kontak', async () => {
   await assert.rejects(buildWith((d) => { d.profile.summary = 'email saya a@b.co'; }), /belum lolos/);
+});
+
+test('build gagal bila public/cv.pdf milik orang lain', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'cvt-'));
+  mkdirSync(join(dir, 'public'));
+  writeFileSync(join(dir, 'public', 'cv.pdf'), '%PDF-1.4\n<< /Title (Orang Lain - CV) >>');
+  writeFileSync(join(dir, 'cv.json'), JSON.stringify(base()));
+  await assert.rejects(build({ dataPath: join(dir, 'cv.json'), outDir: join(dir, 'dist'), publicDir: join(dir, 'public'), env: {}, log: quiet }), /bukan milik/);
 });

@@ -3,14 +3,14 @@ import { UI, pick, formatPeriod, formatYm } from './i18n.mjs';
 
 export const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-const FONTS = {
+export const FONTS = {
   geometric: { head: 'Sora', body: 'Plus Jakarta Sans', css: 'family=Sora:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700' },
   humanist: { head: 'Source Sans 3', body: 'Source Sans 3', css: 'family=Source+Sans+3:wght@400;500;600;700' },
   serif: { head: 'Newsreader', body: 'Source Sans 3', css: 'family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Source+Sans+3:wght@400;500;600' },
   mono: { head: 'JetBrains Mono', body: 'Plus Jakarta Sans', css: 'family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600' },
 };
 
-const LINK_LABEL = { portfolio: 'Portfolio', linkedin: 'LinkedIn', github: 'GitHub', gitlab: 'GitLab', behance: 'Behance', dribbble: 'Dribbble', medium: 'Medium', youtube: 'YouTube', instagram: 'Instagram', website: 'Website', other: 'Link' };
+export const LINK_LABEL = { portfolio: 'Portfolio', linkedin: 'LinkedIn', github: 'GitHub', gitlab: 'GitLab', behance: 'Behance', dribbble: 'Dribbble', medium: 'Medium', youtube: 'YouTube', instagram: 'Instagram', website: 'Website', other: 'Link' };
 
 export const DEFAULT_SECTIONS = ['hero', 'highlights', 'experience', 'projects', 'skills', 'education', 'contact'];
 
@@ -18,8 +18,8 @@ export function initials(name) {
   return name.split(/\s+/).filter(Boolean).slice(0, 3).map((w) => w[0].toUpperCase()).join('');
 }
 
-const linkLabel = (l) => l.label || LINK_LABEL[l.type] || 'Link';
-const hostOf = (u) => { try { const x = new URL(u); return (x.host + x.pathname).replace(/^www\./, '').replace(/\/$/, ''); } catch { return u; } };
+export const linkLabel = (l) => l.label || LINK_LABEL[l.type] || 'Link';
+export const hostOf = (u) => { try { const x = new URL(u); return (x.host + x.pathname).replace(/^www\./, '').replace(/\/$/, ''); } catch { return u; } };
 
 function linksList(links, cls = 'links') {
   if (!links?.length) return '';
@@ -27,9 +27,9 @@ function linksList(links, cls = 'links') {
 }
 
 // Hanya metrik yang sudah dikonfirmasi klien yang boleh tampil.
-const verifiedMetrics = (ms) => (ms ?? []).filter((m) => m.verified === true);
+export const verifiedMetrics = (ms) => (ms ?? []).filter((m) => m.verified === true);
 
-function metricText(m, lang) {
+export function metricText(m, lang) {
   const n = new Intl.NumberFormat(lang === 'en' ? 'en-US' : 'id-ID').format(m.value);
   return { value: m.unit === '%' ? `${n}%` : n, unit: m.unit === '%' ? '' : (m.unit ?? ''), label: pick(m.label, lang) };
 }
