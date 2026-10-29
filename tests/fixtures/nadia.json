@@ -1,0 +1,338 @@
+{
+  "$schema": "../../schema/cv.schema.json",
+  "meta": {
+    "schemaVersion": "1.0",
+    "slug": "contoh-nadia",
+    "tier": "web-card",
+    "addons": [
+      "translation"
+    ],
+    "locales": [
+      "id",
+      "en"
+    ],
+    "updatedAt": "2026-10-21T12:00:00+07:00"
+  },
+  "brand": {
+    "tone": "hangat-kolaboratif",
+    "keywords": [
+      "teliti",
+      "komunikatif",
+      "penasaran"
+    ],
+    "positioning": {
+      "id": "Data analyst yang membuat angka mudah dipahami",
+      "en": "A data analyst who makes numbers easy to read"
+    },
+    "palette": {
+      "primary": "#1E3A8A",
+      "accent": "#F59E0B",
+      "ink": "#0F172A",
+      "ground": "#FFFBF5"
+    },
+    "monogram": "NPL",
+    "font": "humanist",
+    "illustration": {
+      "symbol": "data-chart",
+      "mode": "interactive"
+    }
+  },
+  "target": {
+    "roles": [
+      "Data Analyst",
+      "Business Intelligence Analyst"
+    ],
+    "industries": [
+      "E-commerce",
+      "Fintech"
+    ],
+    "careerStage": "fresh-graduate",
+    "locations": [
+      "Jakarta",
+      "remote"
+    ],
+    "jobDescriptions": [
+      {
+        "id": "jd-ecommerce-da",
+        "title": "Junior Data Analyst",
+        "company": "Contoh E-commerce",
+        "keywords": [
+          "SQL",
+          "Looker Studio",
+          "A/B testing",
+          "Python"
+        ]
+      }
+    ]
+  },
+  "profile": {
+    "fullName": "Nadia Putri Lestari",
+    "preferredName": "Nadia",
+    "headline": {
+      "id": "Fresh graduate Statistika · SQL, Python, dashboard",
+      "en": "Statistics graduate · SQL, Python, dashboards"
+    },
+    "summary": {
+      "id": "Lulusan Statistika yang terbiasa mengubah data mentah jadi dashboard yang dipakai tim untuk mengambil keputusan. Pengalaman magang di tim analitik e-commerce dan memimpin divisi riset himpunan.",
+      "en": "Statistics graduate who turns raw data into dashboards teams actually use to decide. Interned with an e-commerce analytics team and led the research division of the student association."
+    },
+    "location": {
+      "city": "Jakarta",
+      "country": "Indonesia",
+      "openToRemote": true
+    },
+    "links": [
+      {
+        "type": "linkedin",
+        "url": "https://www.linkedin.com/in/contoh-nadia"
+      },
+      {
+        "type": "github",
+        "url": "https://github.com/contoh-nadia"
+      }
+    ]
+  },
+  "experience": [
+    {
+      "id": "magang-analitik",
+      "organization": "Contoh E-commerce",
+      "role": {
+        "id": "Data Analyst Intern",
+        "en": "Data Analyst Intern"
+      },
+      "employmentType": "internship",
+      "location": "Jakarta",
+      "period": {
+        "start": "2025-07",
+        "end": "2025-12"
+      },
+      "achievements": [
+        {
+          "id": "dashboard-retur",
+          "star": {
+            "situation": "Tim operasional memantau retur barang lewat spreadsheet manual mingguan.",
+            "task": "Membuat pemantauan retur harian.",
+            "action": "Menulis query SQL dari data transaksi dan membangun dashboard Looker Studio.",
+            "result": "Laporan mingguan manual tidak lagi dibuat; tim membaca dashboard setiap pagi."
+          },
+          "bullet": {
+            "id": "Membangun dashboard retur harian (SQL + Looker Studio) yang menggantikan laporan manual mingguan dan menghemat 6 jam kerja tim per minggu.",
+            "en": "Built a daily returns dashboard (SQL + Looker Studio) that replaced a weekly manual report and saved the team 6 hours a week."
+          },
+          "metrics": [
+            {
+              "value": 6,
+              "unit": "jam/minggu",
+              "label": {
+                "id": "waktu kerja dihemat",
+                "en": "hours saved weekly"
+              },
+              "verified": true
+            }
+          ],
+          "keywords": [
+            "SQL",
+            "Looker Studio",
+            "dashboard"
+          ],
+          "highlight": true
+        }
+      ],
+      "skills": [
+        "SQL",
+        "Looker Studio",
+        "Google Sheets"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "skripsi-churn",
+      "name": "Prediksi churn pelanggan",
+      "role": {
+        "id": "Skripsi",
+        "en": "Undergraduate thesis"
+      },
+      "period": {
+        "start": "2025-09",
+        "end": "2026-03"
+      },
+      "description": {
+        "id": "Model klasifikasi untuk memprediksi pelanggan yang berhenti berlangganan, dari 20 ribu baris data publik.",
+        "en": "A classification model predicting subscriber churn from 20k rows of public data."
+      },
+      "tech": [
+        "Python",
+        "pandas",
+        "scikit-learn"
+      ],
+      "links": [
+        {
+          "type": "github",
+          "url": "https://github.com/contoh-nadia/skripsi-churn"
+        }
+      ],
+      "caseStudy": {
+        "problem": {
+          "id": "Layanan berlangganan kehilangan pelanggan tanpa tahu siapa yang akan berhenti.",
+          "en": "A subscription service was losing customers without knowing who would leave next."
+        },
+        "approach": {
+          "id": "Membersihkan 20 ribu baris data publik, membandingkan tiga model klasifikasi, lalu memilih yang paling mudah dijelaskan ke tim bisnis.",
+          "en": "Cleaned 20k rows of public data, compared three classifiers, and picked the one easiest to explain to a business team."
+        },
+        "outcome": {
+          "id": "Model akhir menandai pelanggan berisiko lebih awal, dengan daftar faktor yang bisa langsung ditindaklanjuti.",
+          "en": "The final model flags at-risk customers early, with a list of drivers the team can act on."
+        }
+      }
+    }
+  ],
+  "education": [
+    {
+      "id": "s1-statistika",
+      "institution": "Universitas Contoh",
+      "degree": "S1",
+      "field": {
+        "id": "Statistika",
+        "en": "Statistics"
+      },
+      "period": {
+        "start": "2022-08",
+        "end": "2026-03"
+      },
+      "gpa": {
+        "value": 3.62,
+        "scale": 4
+      }
+    }
+  ],
+  "skills": {
+    "groups": [
+      {
+        "name": {
+          "id": "Data",
+          "en": "Data"
+        },
+        "items": [
+          {
+            "name": "SQL",
+            "level": "proficient"
+          },
+          {
+            "name": "Python (pandas)",
+            "level": "proficient"
+          },
+          {
+            "name": "Looker Studio",
+            "level": "advanced"
+          }
+        ]
+      },
+      {
+        "name": {
+          "id": "Kerja tim",
+          "en": "Teamwork"
+        },
+        "items": [
+          {
+            "name": "Presentasi hasil analisis"
+          },
+          {
+            "name": "Koordinasi lintas divisi"
+          }
+        ]
+      }
+    ]
+  },
+  "languages": [
+    {
+      "name": "Indonesia",
+      "level": "native"
+    },
+    {
+      "name": "Inggris",
+      "level": "B2"
+    }
+  ],
+  "organizations": [
+    {
+      "id": "himpunan-riset",
+      "organization": "Himpunan Mahasiswa Statistika",
+      "role": {
+        "id": "Kepala Divisi Riset",
+        "en": "Head of Research"
+      },
+      "employmentType": "volunteer",
+      "period": {
+        "start": "2024-01",
+        "end": "2024-12"
+      },
+      "achievements": [
+        {
+          "id": "survei-angkatan",
+          "bullet": {
+            "id": "Memimpin 8 anggota menjalankan survei kepuasan akademik dengan 410 responden.",
+            "en": "Led 8 members to run an academic satisfaction survey with 410 respondents."
+          }
+        }
+      ]
+    }
+  ],
+  "pitch": {
+    "elevator60s": {
+      "id": "Saya Nadia, lulusan Statistika yang senang membuat data mudah dibaca. Saat magang, dashboard retur saya menggantikan laporan manual mingguan dan dipakai tim operasional setiap pagi.",
+      "en": "I'm Nadia, a statistics graduate who likes making data easy to read. During my internship, my returns dashboard replaced a weekly manual report and became the ops team's morning read."
+    }
+  },
+  "outputs": {
+    "ats": {
+      "pages": 1,
+      "sectionOrder": [
+        "summary",
+        "experience",
+        "projects",
+        "education",
+        "skills",
+        "organizations",
+        "languages"
+      ]
+    },
+    "visual": {
+      "pages": 1,
+      "layout": "sidebar-left",
+      "showPhoto": false
+    },
+    "web": {
+      "enabled": true,
+      "mode": "single",
+      "basePath": "/",
+      "sections": [
+        "hero",
+        "highlights",
+        "experience",
+        "projects",
+        "skills",
+        "education",
+        "contact"
+      ],
+      "qr": true
+    }
+  },
+  "variants": [
+    {
+      "id": "var-ecommerce",
+      "jobRef": "jd-ecommerce-da",
+      "extraKeywords": [
+        "A/B testing"
+      ],
+      "achievementOrder": [
+        "dashboard-retur"
+      ],
+      "matchScore": {
+        "before": 58,
+        "after": 81
+      }
+    }
+  ]
+}
