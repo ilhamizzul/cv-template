@@ -66,3 +66,13 @@ test('judul PDF terbaca dari metadata', () => {
   assert.equal(pdfTitle(Buffer.from('<< /Title <FEFF004E00E9> >>')), 'Né');
   assert.equal(pdfTitle(Buffer.from('tanpa judul')), null);
 });
+
+test('PDF visual varian timeline: garis waktu, indikator level, figur', () => {
+  const d = data(); d.outputs.visual.layout = 'timeline';
+  const html = renderVisual({ data: d, lang: 'en', contact: contactFrom(priv(), d), webUrl: 'https://x.github.io/', figure: '<svg class="iso"></svg>', qr: '<svg></svg>' });
+  assert.match(html, /class="layout-timeline"/);
+  assert.match(html, /<ol class="tl">/);
+  assert.match(html, /class="dots"/);
+  assert.match(html, /<div class="plate"><svg class="iso">/);
+  assert.match(text(html), /Work Experience/);
+});

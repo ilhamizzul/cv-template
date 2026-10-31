@@ -58,20 +58,8 @@ main{max-width:var(--wrap);margin:0 auto;padding:0 24px}
 
 /* Ilustrasi iso-glow */
 .figure{margin:0;padding:28px;border-radius:24px;background:radial-gradient(120% 90% at 70% 10%,color-mix(in srgb,var(--accent) 14%,var(--plate)),var(--plate) 60%);aspect-ratio:1/0.86;display:grid;place-items:center}
-svg.iso{width:100%;height:auto;display:block;max-height:100%}
-.iso rect,.iso polyline{vector-effect:non-scaling-stroke;stroke-linejoin:round}
-.iso .ft{fill:#0E1740;stroke:#3A4785;stroke-width:1}
-.iso .ff{fill:#0B1233;stroke:#3A4785;stroke-width:1}
-.iso .fs{fill:#080E2A;stroke:#3A4785;stroke-width:1}
-.iso .dt{fill:none;stroke:#2F3B74;stroke-width:1}
-.iso .ln{fill:#3A4785}.iso .ln2{fill:#26326A}
-.iso .ink{fill:#04122A}
-.iso .gl,.iso .acf,.iso .acft{fill:var(--accent);filter:url(#gf-glow)}
-.iso .acft{stroke:var(--accent)}
-.iso .gline{stroke:var(--accent);stroke-width:1.6;filter:url(#gf-glow)}
 .figure.live{cursor:pointer}
-.figure.live:hover .gl,.figure.live:hover .acf,.figure.live:hover .acft,.figure.live.on .gl,.figure.live.on .acf,.figure.live.on .acft{animation:pulse 1.3s ease-in-out infinite}
-@keyframes pulse{50%{opacity:.45}}
+/* gaya garis & cahaya figur ada di iso.css */
 
 /* Bagian */
 .sec{padding:56px 0;border-top:1px solid var(--line)}

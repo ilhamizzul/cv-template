@@ -1,0 +1,29 @@
+/* Figur iso-glow: dipakai web CV (assets/iso.css) dan PDF visual (disisipkan saat render).
+   Warna aksen hanya lewat var(--accent) supaya ikut brand klien. */
+svg.iso{width:100%;height:auto;display:block}
+.iso rect,.iso circle,.iso line,.iso path,.iso polyline{vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso .ft{fill:#0E1740;stroke:#3A4785;stroke-width:1}
+.iso .ff{fill:#0B1233;stroke:#3A4785;stroke-width:1}
+.iso .fs{fill:#080E2A;stroke:#3A4785;stroke-width:1}
+.iso .dt{fill:none;stroke:#2F3B74;stroke-width:1}
+.iso .ln{fill:#3A4785}.iso .ln2{fill:#26326A}
+.iso .ink{fill:#04122A}
+.iso .ink-ring{fill:#070C24;stroke:#8C98C8;stroke-width:1}
+.iso .gl,.iso .acf,.iso .acft{fill:var(--accent);filter:url(#gf-glow)}
+.iso .acft{stroke:var(--accent)}
+.iso .gline{fill:none;stroke:var(--accent);stroke-width:1.8;filter:url(#gf-glow)}
+.iso .wire{fill:none;stroke:#3A4785;stroke-width:2.2}
+.iso .pulse{vector-effect:none;fill:none;stroke:var(--accent);stroke-width:2.6;stroke-dasharray:140 860;stroke-dashoffset:-420;filter:url(#gf-glow)}
+.iso .halo{fill:var(--accent);opacity:.32;filter:url(#gf-bloom)}
+.iso .halo-line{fill:none;stroke:var(--accent);stroke-width:7;opacity:.35;filter:url(#gf-bloom)}
+.iso .tx{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:6.5px;fill:var(--accent);letter-spacing:.06em}
+
+/* Versi interaktif (web, brand.illustration.mode = interactive): denyut + kilatan berjalan */
+.figure.live .pulse{animation:iso-run 2.4s linear infinite}
+.figure.live:hover .gl,.figure.live:hover .acf,.figure.live:hover .acft,
+.figure.live.on .gl,.figure.live.on .acf,.figure.live.on .acft{animation:iso-beat 1.3s ease-in-out infinite}
+.figure.live:hover .halo,.figure.live.on .halo{opacity:.55;transition:opacity .3s}
+.figure.live:hover .pulse,.figure.live.on .pulse{animation-duration:1s}
+@keyframes iso-run{from{stroke-dashoffset:140}to{stroke-dashoffset:-860}}
+@keyframes iso-beat{50%{opacity:.5}}
+@media (prefers-reduced-motion:reduce){.figure.live .pulse,.figure.live .gl,.figure.live .acf,.figure.live .acft{animation:none!important}}

@@ -13,7 +13,7 @@
     "preview": "node src/preview.mjs",
     "test": "node --test tests/*.test.mjs",
     "pdf": "node src/pdf.mjs",
-    "test:pdf": "node src/pdf.mjs --private tests/fixtures/nadia.private.json --lang all --out out/test && python3 tools/ats_check.py out/test"
+    "test:pdf": "rm -rf out/test && node src/pdf.mjs --private tests/fixtures/nadia.private.json --lang all --out out/test && python3 tools/ats_check.py out/test"
   },
   "dependencies": {
     "ajv": "^8.17.1",

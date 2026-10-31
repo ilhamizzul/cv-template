@@ -2,14 +2,16 @@
 //  - ATS: satu kolom, teks murni, tanpa grafis, judul bagian standar, tanggal MM/YYYY.
 //  - Visual: ber-brand (warna, monogram, figur iso-glow statis, QR ke web CV).
 import { createRequire } from 'node:module';
+import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { UI, pick, formatPeriod } from './i18n.mjs';
+import { renderTimeline } from './pdf-timeline.mjs';
 import { esc, FONTS, initials, linkLabel, hostOf, verifiedMetrics, metricText } from './render.mjs';
 
 const require = createRequire(import.meta.url);
 
-const T = {
+export const T = {
   id: {
     summary: 'Ringkasan', experience: 'Pengalaman Kerja', projects: 'Proyek', education: 'Pendidikan', skills: 'Keahlian',
     certifications: 'Sertifikasi', languages: 'Bahasa', organizations: 'Organisasi', awards: 'Penghargaan',
@@ -30,7 +32,7 @@ const DEFAULT_ATS_ORDER = ['summary', 'experience', 'projects', 'education', 'sk
 const FONT_PKG = {
   'Plus Jakarta Sans': 'plus-jakarta-sans', Sora: 'sora', 'Source Sans 3': 'source-sans-3', Newsreader: 'newsreader', 'JetBrains Mono': 'jetbrains-mono',
 };
-function fontFaces(families) {
+export function fontFaces(families) {
   const out = [];
   for (const fam of new Set(families)) {
     const pkg = FONT_PKG[fam];
@@ -47,7 +49,7 @@ function fontFaces(families) {
 }
 
 // Tanggal angka (07/2025) paling aman dibaca parser ATS dalam bahasa apa pun.
-function ymNum(ym, lang) {
+export function ymNum(ym, lang) {
   if (!ym) return '';
   if (ym === 'present') return T[lang].present;
   const [y, m] = ym.split('-');
@@ -135,14 +137,12 @@ ${body}
 
 /* --------------------------------------------------------------- Visual */
 
-const ISO_CSS = `svg.iso{width:100%;height:auto;display:block}
-.iso rect,.iso polyline{vector-effect:non-scaling-stroke;stroke-linejoin:round}
-.iso .ft{fill:#0E1740;stroke:#3A4785;stroke-width:1}.iso .ff{fill:#0B1233;stroke:#3A4785;stroke-width:1}.iso .fs{fill:#080E2A;stroke:#3A4785;stroke-width:1}
-.iso .dt{fill:none;stroke:#2F3B74;stroke-width:1}.iso .ln{fill:#3A4785}.iso .ln2{fill:#26326A}.iso .ink{fill:#04122A}
-.iso .gl,.iso .acf,.iso .acft{fill:var(--accent);filter:url(#gf-glow)}.iso .acft{stroke:var(--accent)}
-.iso .gline{stroke:var(--accent);stroke-width:1.6;filter:url(#gf-glow)}`;
+// Gaya figur sama dengan web; animasi tidak berlaku di PDF (versi statis).
+export const ISO_CSS = readFileSync(new URL('../assets/iso.css', import.meta.url), 'utf8');
 
-export function renderVisual({ data, lang, contact, webUrl, figure, qr, photoUrl, scale = 1 }) {
+export function renderVisual(args) {
+  if ((args.data.outputs?.visual?.layout) === 'timeline') return renderTimeline(args);
+  const { data, lang, contact, webUrl, figure, qr, photoUrl, scale = 1 } = args;
   const t = T[lang];
   const ui = UI[lang];
   const p = data.profile;

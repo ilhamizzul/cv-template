@@ -37,7 +37,7 @@ Alamat web dan QR code dihitung otomatis dari nama repo, jadi tidak ada yang per
 | `meta.locales` | Bahasa pertama tampil di `/`, bahasa kedua di `/en/`. Hanya satu bahasa = tanpa tombol ganti bahasa |
 | `brand.palette` | `primary` untuk judul dan tautan, `accent` untuk cahaya ilustrasi dan penanda, `ink` warna teks, `ground` warna latar |
 | `brand.font` | `geometric`, `humanist`, `serif`, atau `mono` |
-| `brand.illustration.symbol` | Nama file di `figures/` tanpa `.svg`. Kalau belum ada, dipakai `default.svg` |
+| `brand.illustration.symbol` | Figur profesi: `server-rack` (developer), `data-chart` (data analyst), `food-lab` (QA pangan), `design-desk` (desainer). Kalau belum ada, dipakai `default.svg`. Figur dibuat oleh `tools/figures.py` |
 | `brand.illustration.mode` | `static` diam; `interactive` cahayanya berdenyut saat disentuh atau di-hover |
 | `outputs.web.sections` | Urutan dan pilihan bagian: `hero`, `highlights`, `experience`, `projects`, `case-studies`, `skills`, `education`, `contact` |
 | `outputs.web.mode` | `single` satu halaman; `multi` membuat halaman sendiri untuk tiap proyek yang punya `caseStudy` |
@@ -83,7 +83,7 @@ Hasilnya disimpan di `out/`:
 | `--public` | Versi visual **tanpa kontak** ke `public/cv.pdf`, untuk tombol "Unduh CV" di web |
 | `--site-url <url>` | Paksa alamat untuk QR (default dihitung dari `github` di file privat) |
 
-Tata letak PDF visual diatur di `outputs.visual.layout`: `sidebar-left`, `sidebar-right`, `header-band`, atau `single-column`. Kalau isinya melebihi `outputs.*.pages`, ukuran huruf diperkecil bertahap sampai 84%. Kalau masih belum muat, akan muncul peringatan agar bullet diringkas.
+Tata letak PDF visual diatur di `outputs.visual.layout`: `sidebar-left`, `sidebar-right`, `header-band`, `single-column`, atau `timeline` (Editorial Timeline: halaman terang, figur besar di kepala, pengalaman sebagai garis waktu, keahlian dengan indikator level). Kalau isinya melebihi `outputs.*.pages`, ukuran huruf diperkecil bertahap sampai 84%. Kalau masih belum muat, akan muncul peringatan agar bullet diringkas.
 
 Build web akan **gagal** kalau `public/cv.pdf` berjudul nama orang lain, misalnya PDF contoh Nadia yang lupa diganti.
 

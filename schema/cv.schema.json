@@ -464,7 +464,7 @@
           "additionalProperties": false,
           "properties": {
             "pages": { "enum": [1, 2], "default": 1 },
-            "layout": { "enum": ["sidebar-left", "sidebar-right", "single-column", "header-band"], "default": "sidebar-left" },
+            "layout": { "enum": ["sidebar-left", "sidebar-right", "single-column", "header-band", "timeline"], "default": "sidebar-left" },
             "showPhoto": { "type": "boolean", "default": false }
           }
         },

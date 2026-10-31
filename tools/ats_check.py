@@ -88,7 +88,20 @@ def expected_strings(data, priv, lang):
     return [w for w in want if w]
 
 
+def apply_variant(data, pdf_name):
+    """PDF varian (nama file memuat id varian) hanya memuat pencapaian yang dipilih varian itu."""
+    for v in data.get("variants", []):
+        if f"-{v['id']}-" in pdf_name and v.get("achievementOrder"):
+            keep = set(v["achievementOrder"])
+            data = json.loads(json.dumps(data))
+            for group in (data.get("experience", []), data.get("organizations", [])):
+                for e in group:
+                    e["achievements"] = [a for a in e.get("achievements", []) if a["id"] in keep]
+    return data
+
+
 def check(pdf, data, priv, target_pages):
+    data = apply_variant(data, pdf.name)
     lang = "en" if "-en-" in pdf.name else "id"
     reader = PdfReader(str(pdf))
     texts = extractors(pdf)

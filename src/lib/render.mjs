@@ -220,6 +220,7 @@ ${alternates}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?${f.css}&display=swap">
 <link rel="stylesheet" href="${rel}assets/site.css">
+<link rel="stylesheet" href="${rel}assets/iso.css">
 <style>${themeCss(data.brand)}</style>
 <script type="application/ld+json">${JSON.stringify(person).replace(/</g, '\\u003c')}</script>
 </head>
