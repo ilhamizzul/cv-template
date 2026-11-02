@@ -73,6 +73,8 @@ def image_count(reader):
 def expected_strings(data, priv, lang):
     p = data["profile"]
     want = [p["fullName"], pick(p["headline"], lang)]
+    # Tautan profil harus terbaca utuh (tidak patah di tanda hubung saat pindah baris).
+    want += [re.sub(r"^https?://(www\.)?", "", l["url"]).rstrip("/") for l in p.get("links", [])]
     if priv:
         want.append(priv["contact"]["email"])
         if priv["contact"].get("phone") and priv["contact"].get("showPhoneOnPdf", True):

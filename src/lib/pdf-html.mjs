@@ -74,13 +74,16 @@ export function renderAts({ data, lang, contact, webUrl, scale = 1 }) {
   const font = FONTS[data.brand.font ?? 'geometric'].body;
   const order = data.outputs?.ats?.sectionOrder?.length ? data.outputs.ats.sectionOrder : DEFAULT_ATS_ORDER;
 
-  const contactLine = join2([
+  // Tiap item kontak tidak boleh terpotong di tengah: URL yang patah di tanda hubung
+  // dibaca parser sebagai alamat yang salah (mis. "ilham-izzul-" + "hadyan" → "ilham-izzulhadyan").
+  const contactItems = [
     contact?.city || p.location?.city,
     contact?.email,
     contact?.phone,
     ...(p.links ?? []).map((l) => bare(l.url)),
     webUrl && bare(webUrl),
-  ]);
+  ].filter(Boolean);
+  const contactLine = contactItems.map((c) => `<span class="ci">${esc(c)}</span>`).join(' | ');
 
   const role = (e) => {
     const sub = join2([e.organization, e.location, e.employmentType ? ui.employment[e.employmentType] : '', periodNum(e.period, lang)]);
@@ -121,6 +124,7 @@ body{margin:0;font-family:'${font}',Arial,sans-serif;font-size:calc(10.4pt * var
 h1{font-size:calc(19pt * var(--k));margin:0 0 2pt;font-weight:700}
 .hl{margin:0 0 3pt;font-size:calc(11pt * var(--k))}
 .ct{margin:0 0 8pt}
+.ci{white-space:nowrap}
 h2{font-size:calc(10.8pt * var(--k));text-transform:uppercase;letter-spacing:.04em;margin:calc(9pt * var(--k)) 0 4pt;padding-bottom:1.5pt;border-bottom:.6pt solid #000;font-weight:700}
 p{margin:0 0 3pt}
 .entry{margin-bottom:calc(6pt * var(--k));break-inside:avoid}
@@ -130,7 +134,7 @@ ul{margin:2pt 0 0;padding-left:13pt}
 li{margin:0 0 1.5pt}
 a{color:#000;text-decoration:none}
 </style></head><body>
-<header><h1>${esc(p.fullName)}</h1><p class="hl">${esc(pick(p.headline, lang))}</p><p class="ct">${esc(contactLine)}</p></header>
+<header><h1>${esc(p.fullName)}</h1><p class="hl">${esc(pick(p.headline, lang))}</p><p class="ct">${contactLine}</p></header>
 ${body}
 </body></html>`;
 }
